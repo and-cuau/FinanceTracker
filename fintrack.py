@@ -179,6 +179,9 @@ uconn.close()
 
 
 
+
+
+
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all domains
 
@@ -307,8 +310,11 @@ def process_data():
              Entertainment, GiftsDonations, Misc
          ) VALUES (?, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)''', 
          (date,))
+    
+    cursor.execute("SELECT last_insert_rowid()")
+    new_row_idt = cursor.fetchone()[0]
 
-    cursor.execute(f"UPDATE transactions SET {type} = ? WHERE Date = ?", (amount, date))
+    cursor.execute(f"UPDATE transactions SET {type} = ? WHERE ID = ?", (amount, new_row_idt))
 
     conn.commit()
 
@@ -352,6 +358,7 @@ def sendExpenditureData():
     print(result_dict)
     print("End test of st to pd")
     print()
+    conn.close()
 
     return jsonify(result_dict)
 
@@ -372,6 +379,7 @@ def sendWeeklyExpenditureData():
     print(result_dict)
     print("End test of st to pd")
     print()
+    conn.close()
 
     return jsonify(result_dict)
 
@@ -408,6 +416,7 @@ def process_data3():
 
     print("test of transdict")
     print(str(trans_dict))
+    conn.close()
     return jsonify(trans_dict)
     #return jsonify({'week1': 'test'}) # this works
    
