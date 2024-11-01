@@ -295,7 +295,8 @@
         function addBars(data) {
             const barContainer = document.getElementById('barContainer');
             const options = ["Housing", "Transportation", "Food", "Clothes", "Healthcare", "PersonalCare", "Education", "DebtPayments", "SavingsInvestments", "Entertainment", "GiftsDonations", "Misc"];
-            week = data[0];
+            const numberOfWeeks = Object.keys(data).length;
+            week = data[numberOfWeeks - 1];
             console.log(String(week["Housing"]));
             barContainer.innerHTML = "";
 
