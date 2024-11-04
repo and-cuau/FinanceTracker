@@ -1,4 +1,5 @@
 # FinanceTracker
+Finance tracker to track  and visualize transactions, daily and weekly expenditures. 
 
 1. Clone the repository:
    ```bash
@@ -13,7 +14,13 @@
    python Fintracker.py
 
 5. Run Page2.html
-    ```bash
-   python Page2.html
 
-   
+Windows:
+
+    ```bash
+   start myFinanceSite.html
+
+MacOS:
+    ```bash
+   start myFinanceSite.html
+
