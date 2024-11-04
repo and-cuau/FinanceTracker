@@ -15,12 +15,12 @@ Finance tracker to track  and visualize transactions, daily and weekly expenditu
 
 5. Run Page2.html
 
-Windows:
+Windows
 
    ```bash
    start myFinanceSite.html
 
-MacOS:
+MacOS
     ```bash
    start myFinanceSite.html
 
