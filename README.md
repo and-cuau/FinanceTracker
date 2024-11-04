@@ -17,7 +17,7 @@ Finance tracker to track  and visualize transactions, daily and weekly expenditu
 
 Windows:
 
-    ```bash
+   ```bash
    start myFinanceSite.html
 
 MacOS:
