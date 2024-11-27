@@ -116,10 +116,12 @@
     </table>
     
 
-    <h2>Bar Graph</h2>
+    <h2>Visualization</h2>
     <div id="barContainer"></div>
 
+    <canvas id="pieChart" style="width:200%;max-width:400px"></canvas>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         // Display the current date
@@ -163,12 +165,9 @@
                 //let amounts = data.week1;
                 //addBars(input2, amounts);  // Add the bar after sending data
 
-
-
                 fetchTransactionData();
                 fetchExpenditureData();
                 fetchWeeklyExpenditureData();
-
 
             })
             .catch((error) => {
@@ -238,6 +237,7 @@
             .then(data => {
                 addRow2(data, "weeklyexpenditure");
                 addBars(data);
+                addSections(data);
                 console.log(data);
                 console.log("test this console log");
                 console.log(2);
@@ -246,8 +246,6 @@
                 console.error('Error:', error);
             });
         }
-
-
 
         function addRow(date, option, amount) {
             const tableBody = document.getElementById("transactions").getElementsByTagName("tbody")[0];
@@ -313,25 +311,40 @@
                 //document.getElementById("idk").textContent = amounts[amounts.length - 1]
             }
             //document.getElementById("idk").textContent = amounts[amounts.length - 1]
+        }
+
+        function addSections(data) {
+            const options = ["Housing", "Transportation", "Food", "Clothes", "Healthcare", "PersonalCare", "Education", "DebtPayments", "SavingsInvestments", "Entertainment", "GiftsDonations", "Misc"];
+            const numberOfWeeks = Object.keys(data).length;
+            week = data[numberOfWeeks - 1]
+            let colors = [];
+            let options2 = [];
+            let amounts = [];
+            for (option of options){
+                    if (week[option] != 0){
+                        let color = '#' + Math.floor(Math.random()*16777215).toString(16);
+                        colors.push(color);
+                        options2.push(option);
+                        amounts.push(week[option]);
+                    }
+            }
+            
+
+            const ctx = document.getElementById('pieChart').getContext('2d');
+            const chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: options2,
+            datasets: [{
+                data: amounts,
+                backgroundColor: colors,
+            }]
+            }
+            });
+
+
 
         }
-        // let k = 0;
-// const newRow = tableBody.insertRow(0);
-// newRow.insertCell(0).textContent = datum.Date;  
-// newRow.insertCell(1).textContent = datum.Housing;
-// newRow.insertCell(2).textContent = datum.Transportation;
-// newRow.insertCell(3).textContent = datum.Food;
-// newRow.insertCell(4).textContent = datum.Clothes;
-// newRow.insertCell(5).textContent = datum.Healthcare;
-// newRow.insertCell(6).textContent = datum.PersonalCare;
-// newRow.insertCell(7).textContent = datum.Education;
-// newRow.insertCell(8).textContent = datum.DebtPayments;
-// newRow.insertCell(9).textContent = datum.SavingsInvestments;
-// newRow.insertCell(10).textContent = datum.Entertainment;
-// newRow.insertCell(11).textContent = datum.GiftsDonations;
-// newRow.insertCell(12).textContent = datum.Misc;
-// newRow.insertCell(13).textContent = datum.Total;
-
 
     </script>
 </body>
