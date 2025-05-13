@@ -3,7 +3,7 @@ A tool for keeping track of daily and weekly accumulated expenditures across dif
 
 ## Technologies Used  
 - **Frontend**: React, HTML, CSS, Typescript
-- **Backend**: Javascript, Node.js, Express.js, SQLite3
+- **Backend**: Python, Flask, SQLite3
 
 ## Features & Functionality  
 - **Components**: Utilizes React components to build reusable UI elements. Certain pages and features are encapsulated in their own component, improving maintainability and readability of the code.
