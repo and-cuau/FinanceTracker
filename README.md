@@ -1,5 +1,5 @@
 # Finance Tracker and Visualizer 
-This application is designed to mimic the core functionality of X.
+A tool for keeping track of daily and weekly accumulated expenditures across different categories of expenses. Provides data visualization with bar graph and pie chart options.
 
 ## Technologies Used  
 - **Frontend**: React, HTML, CSS, Typescript
