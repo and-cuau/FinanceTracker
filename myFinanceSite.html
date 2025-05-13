@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Frontend, Python Backend</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 10px 20px; font-size: 16px; }
+        .bar {
+            width: 50px;
+            margin: 5px;
+            display: inline-block;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>MyFinanceSite</h1>
+    <label for="options">Choose an option:</label>
+    <select id="options" name="options">
+        <option value="Housing">Housing</option>
+        <option value="Transportation">Transportation</option>
+        <option value="Food">Food</option>
+        <option value="Clothes">Clothes</option>
+        <option value="Healthcare">Healthcare</option>
+        <option value="Personal Care">Personal Care</option>
+        <option value="Education">Education</option>
+        <option value="Debt Payments">Debt Payments</option>
+        <option value="Savings & Investments">Savings & Investments</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Gifts & Donations">Gifts & Donations</option>
+        <option value="Misc.">Misc.</option>
+    </select>, 
+
+    <label for="amount">$</label>
+    <input type="text" id="userInput" placeholder="Amount">
+
+    <input type="text" id="dateInput" placeholder="Date" value="10/20/2024">
+    <button onclick="sendFetchData();">Send</button>
+    <h3>Response from Server:</h3>
+    <p id="responseData"></p>
+    <h4 id="currentDate"></h4>
+
+
+    <h2>Transactions</h2>
+    <label id="idk">Original Text</label>
+    <br>
+    <br>
+    <table border="1" id="transactions">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <h2>Daily Expenditures</h2>
+    <br>
+    <br>
+    <table border="1" id="expenditure">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Housing</th>
+                <th>Transportation</th>
+                <th>Food</th>
+                <th>Clothes</th>
+                <th>Healthcare</th>
+                <th>Personal Care</th>
+                <th>Education</th>
+                <th>Debt Payments</th>
+                <th>Savings & Investments</th>
+                <th>Entertainment</th>
+                <th>Gifts & Donations</th>
+                <th>Misc.</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <h2>Weekly Expenditures</h2>
+    <br>
+    <br>
+    <table border="1" id="weeklyexpenditure">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Housing</th>
+                <th>Transportation</th>
+                <th>Food</th>
+                <th>Clothes</th>
+                <th>Healthcare</th>
+                <th>Personal Care</th>
+                <th>Education</th>
+                <th>Debt Payments</th>
+                <th>Savings & Investments</th>
+                <th>Entertainment</th>
+                <th>Gifts & Donations</th>
+                <th>Misc.</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    
+
+    <h2>Visualization</h2>
+    <div id="barContainer"></div>
+
+    <canvas id="pieChart" style="width:200%;max-width:400px"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Display the current date
+        let now = new Date();
+        document.getElementById("currentDate").textContent = now.toLocaleDateString();
+
+        function fetchTransactions() {
+            fetch('http://127.0.0.1:8000/transactions', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Transactions received:", data);
+                // Clear the existing table data
+                const tableBody = document.getElementById("transactions").getElementsByTagName("tbody")[0];
+                tableBody.innerHTML = "";
+
+                console.log(data)
+
+                // Populate the table with fetched transactions
+                Object.keys(data).forEach(key => {
+                    for (let value of data[key]) {
+                        addRow(key, value[0], value[1]);
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching transactions:', error));
+        }
+
+        function fetchExpenditures() {
+            fetch('http://127.0.0.1:8000/expenditures', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Expenditures received:", data);
+                
+                // Update the responseData element with Housing expenditure
+                document.getElementById('responseData').innerText = data[0].Housing;
+                
+                // Populate the expenditures table
+                addRow2(data, "expenditure");
+            })
+            .catch(error => console.error('Error fetching expenditures:', error));
+        }
+
+        function fetchWeeklyExpenditures() {
+            fetch('http://127.0.0.1:8000/weekly_expenditures', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Weekly Expenditures received:", data);
+
+                // Populate the weekly expenditures table
+                addRow2(data, "weeklyexpenditure");
+
+                // Update visual elements
+                addBars(data);
+                addSections(data);
+            })
+            .catch(error => console.error('Error fetching weekly expenditures:', error));
+        }
+
+        function onPageLoad() {
+            fetchTransactions();
+            fetchExpenditures();
+            fetchWeeklyExpenditures();
+        }
+
+        // Attach the function to the window's load event
+        window.onload = onPageLoad;
+       
+        function sendFetchData() {
+            const input = document.getElementById('userInput').value;
+            const input2 = document.getElementById('options').value;
+
+            testDate = document.getElementById("dateInput").value;
+            //testDate = "10/01/2024"
+            const combined = `${testDate} ${input2.replace(/\s+/g, '').replace("&", "").replace(".", "")} ${input}`;
+
+            //  POST // POST // POST
+            fetch('http://127.0.0.1:8000/weekly_expenditures', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: combined }),
+            })
+            .then(response => response.json())
+            .then(data => {
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    
+            // Send data to the server
+            fetch('http://127.0.0.1:8000/expenditures', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: combined }),
+            })
+            .then(response => response.json())
+            .then(data => {
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+            // Send data to the server
+            fetch('http://127.0.0.1:8000/transactions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: combined }),
+            })
+            .then(response => response.json())
+            .then(data => {
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+            // GET // GET // GET
+            fetchTransactions();
+            fetchExpenditures();
+            fetchWeeklyExpenditures();
+        }
+      
+        
+        function addRow(date, option, amount) {
+            const tableBody = document.getElementById("transactions").getElementsByTagName("tbody")[0];
+            const newRow = tableBody.insertRow(0);
+
+            // const amount = document.getElementById('userInput').value;
+
+            //newRow.insertCell(0).textContent = now.toLocaleDateString();
+            newRow.insertCell(0).textContent = date;
+            newRow.insertCell(1).textContent = option;
+            newRow.insertCell(2).textContent = amount;
+
+            // Clear the input fields
+            document.getElementById("userInput").value = "";
+        }
+
+        function addRow2(data, table) {
+            console.log(data)
+            const tableBody = document.getElementById(table).getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = "";
+            const options = ["Date", "Housing", "Transportation", "Food", "Clothes", "Healthcare", "PersonalCare", "Education", "DebtPayments", "SavingsInvestments", "Entertainment", "GiftsDonations", "Misc", "Total"];
+
+            for (let datum of data){
+
+                let k = 0;
+                const newRow = tableBody.insertRow(0);
+                for (let option of options){
+                    newRow.insertCell(k).textContent = datum[option];  
+                    k++;
+                }
+                
+
+            }
+            
+
+            // Object.keys(datum).forEach(key => {
+            //         console.log(key)
+            //         newRow.insertCell(k).textContent = key;
+            //         k = k + 1;
+            //     });
+            // Clear the input fields
+            document.getElementById("userInput").value = "";
+        }
+
+        function addBars(data) {
+            const barContainer = document.getElementById('barContainer');
+            const options = ["Housing", "Transportation", "Food", "Clothes", "Healthcare", "PersonalCare", "Education", "DebtPayments", "SavingsInvestments", "Entertainment", "GiftsDonations", "Misc"];
+            const numberOfWeeks = Object.keys(data).length;
+            week = data[numberOfWeeks - 1];
+            console.log(String(week["Housing"]));
+            barContainer.innerHTML = "";
+
+            for (option of options){
+                    if (week[option] != 0){
+                        const bar = document.createElement('div');
+                        bar.className = 'bar';
+                        bar.style.height = week[option] + 'px';  // Set height based on input amount
+                        bar.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16); // Random color
+                        bar.textContent = `${option}: ${week[option]}`; // Set the label text
+                        barContainer.appendChild(bar); // Append the bar to the container   
+                    }
+                    
+                //document.getElementById("idk").textContent = amounts[amounts.length - 1]
+            }
+            //document.getElementById("idk").textContent = amounts[amounts.length - 1]
+        }
+
+        function addSections(data) {
+            const options = ["Housing", "Transportation", "Food", "Clothes", "Healthcare", "PersonalCare", "Education", "DebtPayments", "SavingsInvestments", "Entertainment", "GiftsDonations", "Misc"];
+            const numberOfWeeks = Object.keys(data).length;
+            week = data[numberOfWeeks - 1]
+            let colors = [];
+            let options2 = [];
+            let amounts = [];
+            for (option of options){
+                    if (week[option] != 0){
+                        let color = '#' + Math.floor(Math.random()*16777215).toString(16);
+                        colors.push(color);
+                        options2.push(option);
+                        amounts.push(week[option]);
+                    }
+            }
+            
+
+            const ctx = document.getElementById('pieChart').getContext('2d');
+            const chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: options2,
+            datasets: [{
+                data: amounts,
+                backgroundColor: colors,
+            }]
+            }
+            });
+
+
+
+        }
+
+    </script>
+</body>
+</html>
+
+
+
