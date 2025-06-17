@@ -1,5 +1,5 @@
 # Finance Tracker and Visualizer 
-A tool for keeping track of daily and weekly accumulated expenditures across different categories of expenses. Provides data visualization with bar graph and pie chart options.
+A tool for keeping track of budget as well as daily and weekly accumulated expenditures across different categories of expenses. Provides data visualization with bar graph and pie chart options.
 
 ## Technologies Used
 - **Frontend**: React, HTML, CSS, Typescript, Chart.js
