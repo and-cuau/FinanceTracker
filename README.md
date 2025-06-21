@@ -2,7 +2,7 @@
 A tool for keeping track of budget as well as daily and weekly accumulated expenditures across different categories of expenses. Provides data visualization with bar graph and pie chart options.
 
 ## Technologies Used
-- **Frontend**: React, HTML, CSS, Typescript, Chart.js
+- **Frontend**: React, HTML, CSS, TypeScript, Chart.js
 - **Backend**: Python, Flask, SQLite3
 
 ## Features & Functionality  
