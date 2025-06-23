@@ -11,4 +11,6 @@ A tool for keeping track of budget as well as daily and weekly accumulated expen
 - **Passing Props**: Components communicate and share data through props, allowing for dynamic content rendering and a smooth user experience. For example, the main page component passes data to child components to display relevant content.  
 - **Live-updating Data Visualization**: Weekly and daily accumulated expenditures are visualized in real-time using Chart.js Bar and Pie chart components.
 - **Accumulated Expenditure Tracking**: Server handles logic for accumulating expenditures across expenditure categories and across days and weeks.  
-- **Automatic Recurring Expenditures**: Server automatically adds weekly recurring expenditures.
+- **Automatic Recurring Expenditures**: Server automatically adds weekly recurring expenditures. Recurring expenditures are added to both weekly and daily expenditures (Added to the first day of the week for daily expenditures).  
+- **Out-pacing Budget Warning**: Server notifies client if user is on track to exceed weekly budget.
+- **Expense Table to PDF Conversion**: Converts weekly expenses table to PDF file for user records.
