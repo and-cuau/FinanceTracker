@@ -14,3 +14,8 @@ A tool for keeping track of budget as well as daily and weekly accumulated expen
 - **Automatic Recurring Expenditures**: Server automatically adds weekly recurring expenditures. Recurring expenditures are added to both weekly and daily expenditures (Added to the first day of the week for daily expenditures).  
 - **Out-pacing Budget Warning**: Server notifies client if user is on track to exceed weekly budget.
 - **Expense Table to PDF Conversion**: Converts weekly expenses table to PDF file for user records.
+
+## Challenges & Solutions
+
+- **Challenge**: Desired for server to send "out pacing weekly budget" message to client on the event of daily total exceeding a set limit but not on successive additions over the limit.
+- **Solution**: Set "out pacing weekly budget" boolean to false on every entry to daily expense table. Another bolean variable only allows "out pacing weekly budget" boolean to be set to true once in a day.
