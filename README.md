@@ -18,4 +18,4 @@ A tool for keeping track of budget as well as daily and weekly accumulated expen
 ## Challenges & Solutions
 
 - **Challenge**: Desired for server to send "out pacing weekly budget" message to client on the event of daily total exceeding a set limit but not on successive additions over the limit.
-- **Solution**: Set "out pacing weekly budget" boolean to false on every entry to daily expense table. Another bolean variable only allows "out pacing weekly budget" boolean to be set to true once in a day.
+- **Solution**: Set "out pacing weekly budget" boolean to false on every entry to daily expense table. Another boolean variable only allows "out pacing weekly budget" boolean to be set to true once in a day.
