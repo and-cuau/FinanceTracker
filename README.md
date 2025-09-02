@@ -3,7 +3,7 @@ A tool for keeping track of budget as well as daily and weekly accumulated expen
 
 ## Video Demonstration
 
-The following video demonstrates input multiple transactions over days and weeks across multiple categories. Budget tracking is featured as well. The viewer is encouraged to skip to sections relevant to their interests for convenience.
+The following video demonstrates input of multiple transactions over days and weeks across different categories. Budget tracking is featured as well. The viewer is encouraged to skip to sections relevant to their interests for convenience.
 
 https://drive.google.com/drive/folders/1BjPJg5_kcNysFIH6wSktdlNe19m3vRns
 
