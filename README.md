@@ -1,6 +1,12 @@
 # Finance Tracker and Visualizer 
 A tool for keeping track of budget as well as daily and weekly accumulated expenditures across different categories of expenses. Provides data visualization with bar graph and pie chart options.
 
+## Video Demonstration
+
+The following video demonstrates input multiple transactions over days and weeks across multiple categories. Budget tracking is featured as well. The viewer is encouraged to skip to sections relevant to their interests for convenience.
+
+https://drive.google.com/drive/folders/1BjPJg5_kcNysFIH6wSktdlNe19m3vRns
+
 ## Technologies Used
 - **Frontend**: React, HTML, CSS, TypeScript, Chart.js
 - **Backend**: Python, Flask, SQLite3
