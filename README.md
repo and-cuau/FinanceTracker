@@ -24,4 +24,4 @@ https://drive.google.com/drive/folders/1BjPJg5_kcNysFIH6wSktdlNe19m3vRns
 ## Challenges & Solutions
 
 - **Challenge**: Desired for server to send "out pacing weekly budget" message to client on the event of daily total exceeding a set limit but not on successive additions over the limit.
-- **Solution**: Set "out pacing weekly budget" boolean to false on every entry to daily expense table. Another boolean variable only allows "out pacing weekly budget" boolean to be set to true once in a day.
+- **Solution**: Set "out pacing weekly budget" stateless boolean to false on every entry to daily expense table. A stateful boolean variable only allows "out pacing weekly budget" boolean to be set to true once in a day.
