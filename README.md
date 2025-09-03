@@ -7,6 +7,8 @@ The following video demonstrates input of multiple transactions over days and we
 
 https://drive.google.com/drive/folders/1BjPJg5_kcNysFIH6wSktdlNe19m3vRns
 
+Note: The date is incorrect for the weekly accumulated expenditures visualization. The weekly expenditures are for the current week however. This will be corrected in a future update.
+
 ## Technologies Used
 - **Frontend**: React, HTML, CSS, TypeScript, Chart.js
 - **Backend**: Python, Flask, SQLite3
